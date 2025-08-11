@@ -1,4 +1,4 @@
-package com.painel.buffet.demo;
+package com.painel.buffet.demo.utensilios;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -17,6 +18,11 @@ public class UtensilioService {
 
     public String salvar(Utensilios utensilio) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
+        String id = utensilio.getId();
+        if (id == null || id.isEmpty()) {
+            id = UUID.randomUUID().toString();
+            utensilio.setId(id);
+        }
         db.collection(COLLECTION_NAME).document(utensilio.getId()).set(utensilio).get();
         return "Utensílio salvo!";
     }

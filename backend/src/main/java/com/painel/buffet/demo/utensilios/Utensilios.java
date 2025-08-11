@@ -1,4 +1,4 @@
-package com.painel.buffet.demo;
+package com.painel.buffet.demo.utensilios;
 import lombok.Getter;
 import lombok.Setter;
 

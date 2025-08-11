@@ -1,4 +1,4 @@
-package com.painel.buffet.demo;
+package com.painel.buffet.demo.utensilios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
