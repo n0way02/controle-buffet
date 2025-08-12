@@ -1,10 +1,10 @@
-package com.painel.buffet.demo.utensilios;
+package com.painel.buffet.demo.utensils;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Utensilios {
+public class Utensils {
     private String id;
     private String nome;
     private String tipo;

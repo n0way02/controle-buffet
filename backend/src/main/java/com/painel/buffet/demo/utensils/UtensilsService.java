@@ -1,4 +1,4 @@
-package com.painel.buffet.demo.clientes;
+package com.painel.buffet.demo.utensils;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
@@ -13,32 +13,32 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class ClientesService {
-    private static final String COLLECTION_NAME = "clientes";
+public class UtensilsService {
+    private static final String COLLECTION_NAME = "utensilios";
 
-    public String salvar(Clientes cliente) throws Exception {
+    public String create(Utensils utensilio) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        String id = cliente.getId();
+        String id = utensilio.getId();
         if (id == null || id.isEmpty()) {
             id = UUID.randomUUID().toString();
-            cliente.setId(id);
+            utensilio.setId(id);
         }
-        db.collection(COLLECTION_NAME).document(cliente.getId()).set(cliente).get();
+        db.collection(COLLECTION_NAME).document(utensilio.getId()).set(utensilio).get();
         return "Utensílio salvo!";
     }
 
-    public Clientes buscar(String id) throws InterruptedException, ExecutionException {
+    public Utensils getById(String id) throws InterruptedException, ExecutionException {
         Firestore db = FirestoreClient.getFirestore();
-        return db.collection(COLLECTION_NAME).document(id).get().get().toObject(Clientes.class);
+        return db.collection(COLLECTION_NAME).document(id).get().get().toObject(Utensils.class);
     }
 
-    public List<Clientes> listarTodos() throws Exception {
+    public List<Utensils> getAll() throws Exception {
     Firestore db = FirestoreClient.getFirestore();
     ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_NAME).get();
     List<QueryDocumentSnapshot> documents = future.get().getDocuments();
-    List<Clientes> lista = new ArrayList<>();
+    List<Utensils> lista = new ArrayList<>();
     for (QueryDocumentSnapshot doc : documents) {
-        Clientes u = doc.toObject(Clientes.class);
+        Utensils u = doc.toObject(Utensils.class);
         lista.add(u);
     }
     return lista;
