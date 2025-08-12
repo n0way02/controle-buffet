@@ -2,19 +2,19 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function CadastroItem() {
-  const [nome, setNome] = useState('');
-  const [tipo, setTipo] = useState('');
-  const [quantidade, setQuantidade] = useState('');
+  const [name, setName] = useState('');
+  const [type, seType] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [mensagem, setMensagem] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/utensilios', { nome, tipo, quantidade });
+      await axios.post('http://localhost:8080/utensils', { name, type, quantity });
       setMensagem('Item cadastrado com sucesso!');
-      setNome('');
-      setTipo('');
-      setQuantidade('');
+      setName('');
+      seType('');
+      setQuantity('');
     } catch (err) {
       setMensagem(`Erro ao cadastrar item: ${err.message}`);
     }
@@ -22,9 +22,9 @@ function CadastroItem() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input value={nome} onChange={e => setNome(e.target.value)} placeholder="Nome" required />
-      <input value={tipo} onChange={e => setTipo(e.target.value)} placeholder="Tipo" required />
-      <input value={quantidade} onChange={e => setQuantidade(e.target.value)} placeholder="Quantidade" type="number" required />
+      <input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" required />
+      <input value={type} onChange={e => seType(e.target.value)} placeholder="Tipo" required />
+      <input value={quantity} onChange={e => setQuantity(e.target.value)} placeholder="Quantidade" type="number" required />
       <button type="submit">Cadastrar</button>
       {mensagem && <p>{mensagem}</p>}
     </form>
