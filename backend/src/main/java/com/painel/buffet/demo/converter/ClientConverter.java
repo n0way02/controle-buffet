@@ -5,6 +5,10 @@ import com.painel.buffet.demo.dto.ClientDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class ClientConverter {
 
     public Client dtoToClient(ClientDTO dto){
