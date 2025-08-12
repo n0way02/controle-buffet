@@ -6,8 +6,8 @@ import lombok.Setter;
 @Setter
 public class Client {
     private String id;
-    private String nome;
-    private String telefone;
+    private String name;
+    private String phone;
     private String address;
 }
 

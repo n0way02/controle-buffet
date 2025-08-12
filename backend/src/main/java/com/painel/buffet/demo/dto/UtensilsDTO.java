@@ -7,16 +7,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClientDTO {
+public class UtensilsDTO {
 
     @NotBlank(message = "O id não pode estar em branco")
     private String id;
     @NotBlank(message = "O nome não pode estar em branco")
     private String name;
-    @NotBlank(message = "O telefone não pode estar em branco")
-    private String phone;
-    @NotBlank(message = "O endereço não pode estar em branco")
-    private String address;
+    @NotBlank(message = "O tipo não pode estar em branco")
+    private String type;
+    @NotBlank(message = "A quantidade não pode estar em branco")
+    private int quantity;
 
 
 

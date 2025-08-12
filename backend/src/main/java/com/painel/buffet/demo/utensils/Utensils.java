@@ -6,8 +6,8 @@ import lombok.Setter;
 @Setter
 public class Utensils {
     private String id;
-    private String nome;
-    private String tipo;
-    private int quantidade;
+    private String name;
+    private String type;
+    private int quantity;
 }
 

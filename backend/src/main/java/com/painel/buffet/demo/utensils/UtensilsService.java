@@ -5,6 +5,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
+import com.painel.buffet.demo.dto.ClientDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,15 +17,15 @@ import java.util.concurrent.ExecutionException;
 public class UtensilsService {
     private static final String COLLECTION_NAME = "utensilios";
 
-    public String create(Utensils utensilio) throws Exception {
+    public Utensils create(Utensils utensil) throws Exception {
         Firestore db = FirestoreClient.getFirestore();
-        String id = utensilio.getId();
+        String id = utensil.getId();
         if (id == null || id.isEmpty()) {
             id = UUID.randomUUID().toString();
-            utensilio.setId(id);
+            utensil.setId(id);
         }
-        db.collection(COLLECTION_NAME).document(utensilio.getId()).set(utensilio).get();
-        return "Utensílio salvo!";
+        db.collection(COLLECTION_NAME).document(utensil.getId()).set(utensil).get();
+        return utensil;
     }
 
     public Utensils getById(String id) throws InterruptedException, ExecutionException {

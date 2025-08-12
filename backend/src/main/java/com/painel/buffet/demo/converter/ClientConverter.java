@@ -15,8 +15,8 @@ public class ClientConverter {
         Client client = new Client();
         client.setAddress(dto.getAddress());
         client.setId(dto.getId());
-        client.setTelefone(dto.getTelefone());
-        client.setNome(dto.getNome());
+        client.setPhone(dto.getPhone());
+        client.setName(dto.getName());
 
         return client;
     }
@@ -25,8 +25,8 @@ public class ClientConverter {
         ClientDTO dto = new ClientDTO();
         dto.setAddress(client.getAddress());
         dto.setId(client.getId());
-        dto.setTelefone(client.getTelefone());
-        dto.setNome(client.getNome());
+        dto.setPhone(client.getPhone());
+        dto.setName(client.getName());
 
         return dto;
     }
