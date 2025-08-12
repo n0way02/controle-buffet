@@ -5,7 +5,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
-import com.painel.buffet.demo.dto.ClientDTO;
+import com.painel.buffet.demo.dto.UtensilsDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
