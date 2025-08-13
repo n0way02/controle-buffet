@@ -6,6 +6,7 @@ import Login from "./Login";
 import Painel from "./Painel";
 import CadastroItem from "./cadastrarItem";
 import CadastroCliente from "./cadastrarClientes";
+import RegistrarAluguel from "./RegistrarAluguel";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Painel onLogout={() => setUser(null)} />} />
         <Route path="/cadastrar-item" element={<CadastroItem />} />
+        <Route path="/registrar-aluguel" element={<RegistrarAluguel />} />
         <Route path="/cadastrar-cliente" element={<CadastroCliente />} />
       </Routes>
     </Router>
