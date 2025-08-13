@@ -7,15 +7,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UtensilsDTO {
+public class RentalsDTO {
 
     @NotBlank(message = "O id não pode estar em branco")
     private String id;
-    @NotBlank(message = "O nome não pode estar em branco")
-    private String name;
-    @NotBlank(message = "O tipo não pode estar em branco")
-    private String type;
+    private String clientId;
+    private String utensilId;
     @NotBlank(message = "A quantidade não pode estar em branco")
     private int quantity;
-    private int availableQuantity;
+    private boolean rented = false;
+    private String rentedBy = "";
+
 }

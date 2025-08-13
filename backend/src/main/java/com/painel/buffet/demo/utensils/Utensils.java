@@ -9,5 +9,6 @@ public class Utensils {
     private String name;
     private String type;
     private int quantity;
+    private int availableQuantity;
 }
 

@@ -24,6 +24,7 @@ public class UtensilsService {
             id = UUID.randomUUID().toString();
             utensil.setId(id);
         }
+        utensil.setAvailableQuantity(utensil.getQuantity());
         db.collection(COLLECTION_NAME).document(utensil.getId()).set(utensil).get();
         return utensil;
     }
