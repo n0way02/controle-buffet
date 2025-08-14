@@ -20,24 +20,28 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Controle de Buffet</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Entrar</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="form-group">
+          <input
+            type="email"
+            placeholder="Digite seu email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Digite sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Entrar no Sistema</button>
+        {error && <div className="error-message">{error}</div>}
       </form>
     </div>
   );

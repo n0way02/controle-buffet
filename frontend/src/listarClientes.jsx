@@ -29,33 +29,111 @@ function ListarClientes() {
   }
 
   return (
-    <div>
-      <button onClick={() => navigate("/")}>Voltar</button>
-      <h2>Clientes Cadastrados</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Endereço</th>
-            <th>Itens Alugados</th>
-          </tr>
-        </thead>
-        <tbody>
-          {client.map(client => (
-            <tr key={client.id}>
-              <td>{client.name}</td>
-              <td>{client.phone}</td>
-              <td>{client.address}</td>
-              <td>
-                {getRentedItems(client.id).length > 0 
-                ? getRentedItems(client.id).join(", ")
-                : "Nenhum item alugado"}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="page-container">
+      <div className="page-header">
+        <h2>👨‍👩‍👧‍👦 Clientes Cadastrados</h2>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          ← Voltar
+        </button>
+      </div>
+      
+      <div className="list-container">
+        {client.length === 0 ? (
+          <div style={{ 
+            textAlign: 'center', 
+            padding: '3rem', 
+            color: 'var(--muted-color)' 
+          }}>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👥</div>
+            <h3>Nenhum cliente cadastrado</h3>
+            <p>Cadastre o primeiro cliente para começar.</p>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+                <th>Itens Alugados</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {client.map(cliente => {
+                const rentedItems = getRentedItems(cliente.id);
+                const hasRentals = rentedItems.length > 0;
+                
+                return (
+                  <tr key={cliente.id}>
+                    <td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '1.2rem' }}>👤</span>
+                        <strong>{cliente.name}</strong>
+                      </div>
+                    </td>
+                    <td>
+                      <a 
+                        href={`tel:${cliente.phone}`}
+                        style={{ 
+                          color: 'var(--primary-blue)',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        📞 {cliente.phone}
+                      </a>
+                    </td>
+                    <td>
+                      <span style={{ color: 'var(--secondary-color)' }}>
+                        📍 {cliente.address}
+                      </span>
+                    </td>
+                    <td>
+                      {hasRentals ? (
+                        <div style={{ maxWidth: '200px' }}>
+                          {rentedItems.map((item, index) => (
+                            <span 
+                              key={index}
+                              style={{
+                                display: 'inline-block',
+                                background: 'var(--accent-bg)',
+                                padding: '0.25rem 0.5rem',
+                                margin: '0.125rem',
+                                borderRadius: '4px',
+                                fontSize: '0.75rem'
+                              }}
+                            >
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span style={{ color: 'var(--muted-color)', fontStyle: 'italic' }}>
+                          Nenhum item alugado
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <span style={{
+                        background: hasRentals ? 'rgba(221, 107, 32, 0.1)' : 'rgba(56, 161, 105, 0.1)',
+                        color: hasRentals ? 'var(--warning-orange)' : 'var(--success-green)',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '12px',
+                        fontSize: '0.75rem',
+                        fontWeight: '500',
+                        textTransform: 'uppercase',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {hasRentals ? 'Ativo' : 'Livre'}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
