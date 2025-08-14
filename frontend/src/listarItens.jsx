@@ -40,7 +40,6 @@ function ListarItens() {
                 <th>Tipo</th>
                 <th>Quantidade Total</th>
                 <th>Disponível</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -66,19 +65,6 @@ function ListarItens() {
                       fontWeight: '600'
                     }}>
                       {item.availableQuantity}
-                    </span>
-                  </td>
-                  <td>
-                    <span style={{
-                      background: item.availableQuantity > 0 ? 'rgba(56, 161, 105, 0.1)' : 'rgba(229, 62, 62, 0.1)',
-                      color: item.availableQuantity > 0 ? 'var(--success-green)' : 'var(--danger-red)',
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '12px',
-                      fontSize: '0.75rem',
-                      fontWeight: '500',
-                      textTransform: 'uppercase'
-                    }}>
-                      {item.availableQuantity > 0 ? 'Disponível' : 'Esgotado'}
                     </span>
                   </td>
                 </tr>

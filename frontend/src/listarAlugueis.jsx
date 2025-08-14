@@ -99,7 +99,6 @@ function ListarAlugueis() {
                   <th>Cliente</th>
                   <th>Item</th>
                   <th>Quantidade</th>
-                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,19 +129,6 @@ function ListarAlugueis() {
                           fontWeight: '600'
                         }}>
                           {aluguel.quantity}x
-                        </span>
-                      </td>
-                      <td>
-                        <span style={{
-                          background: 'rgba(221, 107, 32, 0.1)',
-                          color: 'var(--warning-orange)',
-                          padding: '0.25rem 0.75rem',
-                          borderRadius: '12px',
-                          fontSize: '0.75rem',
-                          fontWeight: '500',
-                          textTransform: 'uppercase'
-                        }}>
-                          🔄 Ativo
                         </span>
                       </td>
                     </tr>

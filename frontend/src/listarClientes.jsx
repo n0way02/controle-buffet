@@ -56,13 +56,11 @@ function ListarClientes() {
                 <th>Telefone</th>
                 <th>Endereço</th>
                 <th>Itens Alugados</th>
-                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {client.map(cliente => {
                 const rentedItems = getRentedItems(cliente.id);
-                const hasRentals = rentedItems.length > 0;
                 
                 return (
                   <tr key={cliente.id}>
@@ -80,7 +78,7 @@ function ListarClientes() {
                           textDecoration: 'none'
                         }}
                       >
-                        📞 {cliente.phone}
+                        {cliente.phone}
                       </a>
                     </td>
                     <td>
@@ -89,7 +87,7 @@ function ListarClientes() {
                       </span>
                     </td>
                     <td>
-                      {hasRentals ? (
+                      {rentedItems.length > 0 ? (
                         <div style={{ maxWidth: '200px' }}>
                           {rentedItems.map((item, index) => (
                             <span 
@@ -112,20 +110,6 @@ function ListarClientes() {
                           Nenhum item alugado
                         </span>
                       )}
-                    </td>
-                    <td>
-                      <span style={{
-                        background: hasRentals ? 'rgba(221, 107, 32, 0.1)' : 'rgba(56, 161, 105, 0.1)',
-                        color: hasRentals ? 'var(--warning-orange)' : 'var(--success-green)',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '12px',
-                        fontSize: '0.75rem',
-                        fontWeight: '500',
-                        textTransform: 'uppercase',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        {hasRentals ? 'Ativo' : 'Livre'}
-                      </span>
                     </td>
                   </tr>
                 );
