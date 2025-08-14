@@ -15,6 +15,7 @@ export default function Painel({ onLogout }) {
         <li><button onClick={() => navigate("/listar-itens")}>Listar Itens</button></li>
         <li><button onClick={() => navigate("/listar-alugueis")}>Itens Alugados</button></li>
         <li><button onClick={() => navigate("/registrar-aluguel")}>Registrar Aluguel</button></li>
+        <li><button onClick={() => navigate("/listar-clientes")}>Listar Clientes</button></li>
       </ul>
       {/* Aqui você pode renderizar os formulários e listas conforme a opção escolhida */}
     </div>
