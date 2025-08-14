@@ -1,11 +1,10 @@
 package com.painel.buffet.demo.utensils;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 //import com.painel.buffet.demo.dto.UtensilsDTO;
+import com.painel.buffet.demo.rental.Rentals;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,5 +43,13 @@ public class UtensilsService {
         lista.add(u);
     }
     return lista;
-    }   
+    }
+
+    public Utensils update(Utensils utensils, String id) throws Exception{
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(COLLECTION_NAME).document(id);
+        ApiFuture<WriteResult> future = docRef.set(utensils);
+        future.get();
+        return docRef.get().get().toObject(Utensils.class);
+    }
 }

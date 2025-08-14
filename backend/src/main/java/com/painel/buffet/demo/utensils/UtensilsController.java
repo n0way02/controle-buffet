@@ -1,7 +1,9 @@
 package com.painel.buffet.demo.utensils;
 
 import com.painel.buffet.demo.converter.UtensilsConverter;
+import com.painel.buffet.demo.dto.RentalsDTO;
 import com.painel.buffet.demo.dto.UtensilsDTO;
+import com.painel.buffet.demo.rental.Rentals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +48,19 @@ public class UtensilsController {
         List<Utensils> utensils = service.getAll();
         List<UtensilsDTO> utensilsDTO = converter.utensilsToDTOList(utensils);
         return  ResponseEntity.ok(utensilsDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UtensilsDTO> update(@PathVariable String id, @RequestBody UtensilsDTO dto ) throws Exception {
+        try{
+            dto.setId(id);
+            Utensils rentals = converter.dtoToUtensils(dto);
+            Utensils updatedRentals = service.update(rentals,id);
+            UtensilsDTO rentalsDTO = converter.utensilsToDTO(updatedRentals);
+            return  ResponseEntity.ok(rentalsDTO);
+
+        } catch(Exception e){
+            return ResponseEntity.status(404).build();
+        }
     }
 }

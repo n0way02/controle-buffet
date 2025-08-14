@@ -1,10 +1,9 @@
 package com.painel.buffet.demo.rental;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.painel.buffet.demo.clientes.Client;
 import com.painel.buffet.demo.utensils.Utensils;
 //import com.painel.buffet.demo.dto.RentalsDTO;
 import org.springframework.stereotype.Service;
@@ -65,5 +64,14 @@ public class RentalsService {
             rentalsList.add(rentals);
         }
         return rentalsList;
+    }
+
+
+    public Rentals update(Rentals rentals, String id) throws Exception{
+        Firestore db = FirestoreClient.getFirestore();
+        DocumentReference docRef = db.collection(RENTALS_COLLECTION).document(id);
+        ApiFuture<WriteResult> future = docRef.set(rentals);
+        future.get();
+        return docRef.get().get().toObject(Rentals.class);
     }
 }

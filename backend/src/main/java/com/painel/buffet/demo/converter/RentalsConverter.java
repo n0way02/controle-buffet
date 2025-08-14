@@ -13,7 +13,7 @@ public class RentalsConverter {
 
     public Rentals dtoToRentals(RentalsDTO dto){
         Rentals rentals = new Rentals();
-        rentals.setId(dto.getId());
+       //  rentals.setId(dto.getId());
         rentals.setClientId(dto.getClientId());
         rentals.setUtensilId(dto.getUtensilId());
         rentals.setQuantity(dto.getQuantity());

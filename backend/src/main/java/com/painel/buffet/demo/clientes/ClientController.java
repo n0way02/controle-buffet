@@ -18,6 +18,7 @@ public class ClientController {
     @Autowired
     private ClientConverter converter;
 
+
     @PostMapping
     public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO dto) throws Exception {
 
@@ -48,6 +49,19 @@ public class ClientController {
         return  ResponseEntity.ok(clientDTO);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable String id, @RequestBody ClientDTO dto ) throws Exception {
+        try{
+            dto.setId(id);
+            Client client = converter.dtoToClient(dto);
+            Client updatedClient = service.update(client,id);
+            ClientDTO clientDto = converter.clientToDTO(updatedClient);
+            return  ResponseEntity.ok(clientDto);
+
+        } catch(Exception e){
+            return ResponseEntity.status(404).build();
+        }
+    }
 //    tbm é possivel fazer da forma abaixo. A principal diferença é que ele utilizar o toDTO ao invés do toDTOList
 //    @GetMapping
 //    public ResponseEntity<List<ClientDTO>> getAll() throws Exception {
