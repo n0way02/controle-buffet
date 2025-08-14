@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function RegistrarAluguel() {
   const [clientes, setClientes] = useState([]);
@@ -8,6 +9,7 @@ function RegistrarAluguel() {
   const [utensilioId, setUtensilioId] = useState("");
   const [quantity, setQuantity] = useState("");
   const [mensagem, setMensagem] = useState("");
+  const navigate = useNavigate();
 
 const fetchUtensilios = async () => {
   const res = await axios.get("http://localhost:8080/utensils");
@@ -48,6 +50,7 @@ const handleSubmit = async (e) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <button onClick={() => navigate("/")}>Voltar</button>
       <h2>Registrar aluguel</h2>
       <select value={clienteId} onChange={e => setClienteId(e.target.value)} required>
         <option value="">Selecione o cliente</option>
