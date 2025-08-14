@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CadastroCliente() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const navigate = useNavigate();
   const [mensagem, setMensagem] = useState('');
 
   const handleSubmit = async (e) => {
@@ -21,13 +23,62 @@ function CadastroCliente() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" required />
-      <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Telefone" required />
-      <input value={address} onChange={e => setAddress(e.target.value)} placeholder="Endereço" required />
-      <button type="submit">Cadastrar</button>
-      {mensagem && <p>{mensagem}</p>}
-    </form>
+    <div className="page-container">
+      <div className="page-header">
+        <h2>👥 Cadastrar Cliente</h2>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          ← Voltar
+        </button>
+      </div>
+      
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Nome Completo</label>
+            <input 
+              id="name"
+              value={name} 
+              onChange={e => setName(e.target.value)} 
+              placeholder="Digite o nome completo do cliente" 
+              required 
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="phone">Telefone</label>
+            <input 
+              id="phone"
+              value={phone} 
+              onChange={e => setPhone(e.target.value)} 
+              placeholder="(11) 99999-9999" 
+              type="tel"
+              required 
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="address">Endereço</label>
+            <input 
+              id="address"
+              value={address} 
+              onChange={e => setAddress(e.target.value)} 
+              placeholder="Endereço completo com CEP" 
+              required 
+            />
+          </div>
+          
+          <button type="submit" className="submit-btn">
+            ✅ Cadastrar Cliente
+          </button>
+          
+          {mensagem && (
+            <div className={mensagem.includes('sucesso') ? 'success-message' : 'error-message'}>
+              {mensagem}
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
   );
 }
 
