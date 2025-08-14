@@ -18,6 +18,5 @@ public class UtensilsDTO {
     @NotBlank(message = "A quantidade não pode estar em branco")
     private int quantity;
     private int availableQuantity;
-    @NotBlank(message = "O descrição não pode estar em branco")
     private String description;
 }

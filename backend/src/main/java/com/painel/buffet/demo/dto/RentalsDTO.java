@@ -17,6 +17,5 @@ public class RentalsDTO {
     private int quantity;
     private boolean rented = false;
     private String rentedBy = "";
-    @NotBlank(message = "O descrição não pode estar em branco")
     private String description;
 }
