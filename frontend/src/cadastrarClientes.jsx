@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CadastroCliente() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const navigate = useNavigate();
   const [mensagem, setMensagem] = useState('');
 
   const handleSubmit = async (e) => {
@@ -21,13 +23,17 @@ function CadastroCliente() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" required />
-      <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Telefone" required />
-      <input value={address} onChange={e => setAddress(e.target.value)} placeholder="Endereço" required />
-      <button type="submit">Cadastrar</button>
-      {mensagem && <p>{mensagem}</p>}
-    </form>
+    <div>
+      <button onClick={() => navigate("/")}>Voltar</button>
+      <h2>Cadastrar Cliente</h2>
+      <form onSubmit={handleSubmit}>
+        <input value={name} onChange={e => setName(e.target.value)} placeholder="Nome" required />
+        <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Telefone" required />
+        <input value={address} onChange={e => setAddress(e.target.value)} placeholder="Endereço" required />
+        <button type="submit">Cadastrar</button>
+        {mensagem && <p>{mensagem}</p>}
+      </form>
+    </div>
   );
 }
 
