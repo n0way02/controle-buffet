@@ -38,6 +38,7 @@ function ListarItens() {
               <tr>
                 <th>Nome</th>
                 <th>Tipo</th>
+                <th>Descrição</th>
                 <th>Quantidade Total</th>
                 <th>Disponível</th>
               </tr>
@@ -58,6 +59,7 @@ function ListarItens() {
                       {item.type}
                     </span>
                   </td>
+                  <td>{item.description}</td>
                   <td>{item.quantity}</td>
                   <td>
                     <span style={{

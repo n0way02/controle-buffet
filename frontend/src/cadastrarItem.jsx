@@ -7,16 +7,18 @@ function CadastroItem() {
   const [type, seType] = useState('');
   const [quantity, setQuantity] = useState('');
   const [mensagem, setMensagem] = useState('');
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/utensils', { name, type, quantity });
+      await axios.post('http://localhost:8080/utensils', { name, type, quantity, description });
       setMensagem('Item cadastrado com sucesso!');
       setName('');
       seType('');
       setQuantity('');
+      setDescription('');
     } catch (err) {
       setMensagem(`Erro ao cadastrar item: ${err.message}`);
     }
@@ -54,7 +56,17 @@ function CadastroItem() {
               required 
             />
           </div>
-          
+
+          <div className="form-group">
+            <label htmlFor="description">Descrição</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="Descrição do item..."
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="quantity">Quantidade</label>
             <input 

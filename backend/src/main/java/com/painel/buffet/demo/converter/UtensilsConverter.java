@@ -18,6 +18,7 @@ public class UtensilsConverter {
         utensils.setType(dto.getType());
         utensils.setQuantity(dto.getQuantity());
         utensils.setAvailableQuantity(dto.getAvailableQuantity());
+        utensils.setDescription(dto.getDescription());
         return utensils;
     }
 
@@ -28,6 +29,7 @@ public class UtensilsConverter {
         dto.setType(utensils.getType());
         dto.setQuantity(utensils.getQuantity());
         dto.setAvailableQuantity(utensils.getAvailableQuantity());
+        dto.setDescription(utensils.getDescription());
         return dto;
     }
 

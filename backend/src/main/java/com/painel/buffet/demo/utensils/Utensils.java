@@ -10,5 +10,6 @@ public class Utensils {
     private String type;
     private int quantity;
     private int availableQuantity;
+    private String description;
 }
 
