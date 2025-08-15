@@ -6,6 +6,7 @@ function ListarClientes() {
   const [client, setClient] = useState([]);
   const [rentals, setRentals] = useState([]);
   const [utensils, setUtensils] = useState([]);
+  const [description, setDescription] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,7 +55,9 @@ function ListarClientes() {
               <tr>
                 <th>Nome</th>
                 <th>Telefone</th>
+                <th>Email</th>
                 <th>Endereço</th>
+                <th>Anotação</th>
                 <th>Itens Alugados</th>
               </tr>
             </thead>
@@ -82,8 +85,29 @@ function ListarClientes() {
                       </a>
                     </td>
                     <td>
+                      <a 
+                        href={`mailto:${cliente.email}`}
+                        style={{ 
+                          color: 'var(--primary-blue)',
+                          textDecoration: 'none'
+                        }}
+                      >
+                        {cliente.email}
+                      </a>
+                    </td>
+                    <td>
                       <span style={{ color: 'var(--secondary-color)' }}>
                         📍 {cliente.address}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ 
+                        background: 'var(--accent-bg)',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.875rem'
+                      }}>
+                        {cliente.description || 'Nenhuma anotação'}
                       </span>
                     </td>
                     <td>

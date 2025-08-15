@@ -87,7 +87,7 @@
 
 /* Componente Painel */
 .painel-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 2rem auto;
   background: var(--card-bg);
   border-radius: var(--border-radius-lg);
@@ -171,7 +171,7 @@
 
 /* Páginas de formulário */
 .page-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
