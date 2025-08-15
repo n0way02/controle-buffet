@@ -17,6 +17,8 @@ public class ClientDTO {
     private String phone;
     @NotBlank(message = "O endereço não pode estar em branco")
     private String address;
+    @NotBlank(message = "O email não pode estar em branco")
+    private String email;
     private String description;
 
 

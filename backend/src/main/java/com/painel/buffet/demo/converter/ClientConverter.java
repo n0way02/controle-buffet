@@ -17,6 +17,8 @@ public class ClientConverter {
         // client.setId(dto.getId());
         client.setPhone(dto.getPhone());
         client.setName(dto.getName());
+        client.setDescription(dto.getDescription());
+        client.setEmail(dto.getEmail());
 
         return client;
     }
@@ -27,6 +29,8 @@ public class ClientConverter {
         dto.setId(client.getId());
         dto.setPhone(client.getPhone());
         dto.setName(client.getName());
+        dto.setDescription(client.getDescription());
+        dto.setEmail(client.getEmail());
 
         return dto;
     }

@@ -6,17 +6,21 @@ function CadastroCliente() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
   const [mensagem, setMensagem] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8080/client', { name, phone, address });
+      await axios.post('http://localhost:8080/client', { name, phone, address, email, description });
       setMensagem('Cliente cadastrado com sucesso!');
       setName('');
       setPhone('');
       setAddress('');
+      setEmail('');
+      setDescription('');
     } catch (err) {
       setMensagem(`Erro ao cadastrar cliente: ${err.message}`);
     }
@@ -55,6 +59,18 @@ function CadastroCliente() {
               required 
             />
           </div>
+
+          <div>
+            <label htmlFor="email">Email</label>
+            <input 
+              id="email"
+              value={email} 
+              onChange={e => setEmail(e.target.value)} 
+              placeholder="Digite o email do cliente" 
+              type="email"
+              required 
+            />
+          </div>
           
           <div className="form-group">
             <label htmlFor="address">Endereço</label>
@@ -64,6 +80,16 @@ function CadastroCliente() {
               onChange={e => setAddress(e.target.value)} 
               placeholder="Endereço completo com CEP" 
               required 
+            />
+          </div>
+
+          <div>
+            <label htmlFor="description">Anotação</label>
+            <textarea
+              id="description"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="Digite uma anotação para o cliente"
             />
           </div>
           
