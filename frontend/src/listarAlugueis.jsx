@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 function ListarAlugueis() {
   const [alugueis, setAlugueis] = useState([]);
   const [clientes, setClientes] = useState([]);
-    const [utensils, setUtensils] = useState([]);
+  const [sortField, setSortField] = useState("name");
+  const [sortAsc, setSortAsc] = useState(true);
+  const [utensils, setUtensils] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +32,33 @@ function ListarAlugueis() {
     const utensil = utensils.find(u => u.id === id);
     return utensil ? utensil.name : id;
   };
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
+  };
+
+const sortedRentals = [...alugueis].sort((a, b) => {
+  let valA = a[sortField] !== undefined ? a[sortField] : "";
+  let valB = b[sortField] !== undefined ? b[sortField] : "";
+  if (sortField === "clientId") {
+    valA = getClienteNome(a.clientId);
+    valB = getClienteNome(b.clientId);
+  } else if (sortField === "utensilId") {
+    valA = getUtensilName(a.utensilId);
+    valB = getUtensilName(b.utensilId);
+  }
+  if (typeof valA === "string") valA = valA.toLowerCase();
+  if (typeof valB === "string") valB = valB.toLowerCase();
+  if (valA < valB) return sortAsc ? -1 : 1;
+  if (valA > valB) return sortAsc ? 1 : -1;
+  return 0;
+});
+
 
   return (
     <div className="page-container">
@@ -96,13 +125,13 @@ function ListarAlugueis() {
             <table>
               <thead>
                 <tr>
-                  <th>Cliente</th>
-                  <th>Item</th>
-                  <th>Quantidade</th>
+                  <th onClick={() => handleSort("clientId")}>Cliente</th>
+                  <th onClick={() => handleSort("utensilId")}>Item</th>
+                  <th onClick={() => handleSort("quantity")}>Quantidade</th>
                 </tr>
               </thead>
               <tbody>
-                {alugueis.map(aluguel => {
+                {sortedRentals.map(aluguel => {
                   const cliente = getClienteNome(aluguel.clientId);
                   const item = getUtensilName(aluguel.utensilId);
                   

@@ -6,7 +6,8 @@ function ListarClientes() {
   const [client, setClient] = useState([]);
   const [rentals, setRentals] = useState([]);
   const [utensils, setUtensils] = useState([]);
-  const [description, setDescription] = useState([]);
+  const [sortField, setSortField] = useState("");
+  const [sortAsc, setSortAsc] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,12 +23,41 @@ function ListarClientes() {
   }, []);
 
   const getRentedItems = (clientId) => {
-    const clientRentedItems = rentals.filter(r => r.clientId === clientId);
-    return clientRentedItems.map(r => {
-        const item = utensils.find(u => u.id === r.utensilId);
-        return item ? `${item.name} (${r.quantity})` : `ID: ${r.utensilId} (${r.quantity})`;
+  const clientRentedItems = rentals.filter(r => r.clientId === clientId);
+  return clientRentedItems.map(r => {
+      const item = utensils.find(u => u.id === r.utensilId);
+      return item ? `${item.name} (${r.quantity})` : `ID: ${r.utensilId} (${r.quantity})`;
     });
   }
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
+  };
+
+  const sortedClients = [...client].sort((a, b) => {
+    let valA = a[sortField] || "";
+    let valB = b[sortField] || "";
+    if (sortField === "rentedItems") {
+      valA = getRentedItems(a.id).length;
+      valB = getRentedItems(b.id).length;
+    }
+    if (typeof valA === "string") valA = valA.toLowerCase();
+    if (typeof valB === "string") valB = valB.toLowerCase();
+    if (valA < valB) {
+      return sortAsc ? -1 : 1;
+    }
+    if (valA > valB) {
+      return sortAsc ? 1 : -1;
+    }
+    return 0;
+  });
+
+
 
   return (
     <div className="page-container">
@@ -53,16 +83,16 @@ function ListarClientes() {
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Telefone</th>
-                <th>Email</th>
-                <th>Endereço</th>
-                <th>Anotação</th>
-                <th>Itens Alugados</th>
+                <th onClick={() => handleSort("name")}>Nome</th>
+                <th onClick={() => handleSort("phone")}>Telefone</th>
+                <th onClick={() => handleSort("email")}>Email</th>
+                <th onClick={() => handleSort("address")}>Endereço</th>
+                <th onClick={() => handleSort("description")}>Anotação</th>
+                <th onClick={() => handleSort("rentedItems")}>Itens Alugados</th>
               </tr>
             </thead>
             <tbody>
-              {client.map(cliente => {
+              {sortedClients.map(cliente => {
                 const rentedItems = getRentedItems(cliente.id);
                 
                 return (

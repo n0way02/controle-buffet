@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function ListarItens() {
   const [itens, setItens] = useState([]);
+  const [sortField, setSortField] = useState("name");
+  const [sortAsc, setSortAsc] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -11,6 +13,25 @@ function ListarItens() {
       .then(res => setItens(res.data))
       .catch(() => setItens([]));
   }, []);
+
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortAsc(!sortAsc);
+    } else {
+      setSortField(field);
+      setSortAsc(true);
+    }
+  };
+
+const sortedItens = [...itens].sort((a, b) => {
+  let valA = a[sortField] !== undefined ? a[sortField] : "";
+  let valB = b[sortField] !== undefined ? b[sortField] : "";
+  if (typeof valA === "string") valA = valA.toLowerCase();
+  if (typeof valB === "string") valB = valB.toLowerCase();
+  if (valA < valB) return sortAsc ? -1 : 1;
+  if (valA > valB) return sortAsc ? 1 : -1;
+  return 0;
+});
 
   return (
     <div className="page-container">
@@ -36,15 +57,15 @@ function ListarItens() {
           <table>
             <thead>
               <tr>
-                <th>Nome</th>
-                <th>Tipo</th>
-                <th>Descrição</th>
-                <th>Quantidade Total</th>
-                <th>Disponível</th>
+                <th onClick={() => handleSort("name")}>Nome</th>
+                <th onClick={() => handleSort("type")}>Tipo</th>
+                <th onClick={() => handleSort("description")}>Descrição</th>
+                <th onClick={() => handleSort("quantity")}>Quantidade Total</th>
+                <th onClick={() => handleSort("availableQuantity")}>Disponível</th>
               </tr>
             </thead>
             <tbody>
-              {itens.map(item => (
+              {sortedItens.map(item => (
                 <tr key={item.id}>
                   <td>
                     <strong>{item.name}</strong>
