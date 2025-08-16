@@ -17,6 +17,7 @@ public class RentalsConverter {
         rentals.setClientId(dto.getClientId());
         rentals.setUtensilId(dto.getUtensilId());
         rentals.setQuantity(dto.getQuantity());
+        rentals.setPrice(dto.getPrice());
         return rentals;
     }
 
@@ -26,6 +27,7 @@ public class RentalsConverter {
         dto.setClientId(rentals.getClientId());
         dto.setUtensilId(rentals.getUtensilId());
         dto.setQuantity(rentals.getQuantity());
+        dto.setPrice(rentals.getPrice());
         return dto;
     }
 

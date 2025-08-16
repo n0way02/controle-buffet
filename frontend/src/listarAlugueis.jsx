@@ -7,6 +7,7 @@ function ListarAlugueis() {
   const [clientes, setClientes] = useState([]);
   const [sortField, setSortField] = useState("name");
   const [sortAsc, setSortAsc] = useState(true);
+  const [price, setPrice] = useState("");
   const [utensils, setUtensils] = useState([]);
   const navigate = useNavigate();
 
@@ -128,6 +129,7 @@ const sortedRentals = [...alugueis].sort((a, b) => {
                   <th onClick={() => handleSort("clientId")}>Cliente</th>
                   <th onClick={() => handleSort("utensilId")}>Item</th>
                   <th onClick={() => handleSort("quantity")}>Quantidade</th>
+                  <th onClick={() => handleSort("price")}>Preço</th>
                 </tr>
               </thead>
               <tbody>
@@ -160,6 +162,17 @@ const sortedRentals = [...alugueis].sort((a, b) => {
                           {aluguel.quantity}x
                         </span>
                       </td>
+                      <td>
+                        <span style={{
+                          background: 'var(--primary-bg)',
+                          padding: '0.25rem 0.75rem',
+                          borderRadius: '12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600'
+                        }}>
+                          R$ {Number(aluguel.price).toFixed(2)}
+                        </span>
+                        </td>
                     </tr>
                   );
                 })}

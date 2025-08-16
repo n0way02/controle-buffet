@@ -10,5 +10,6 @@ public class Rentals {
     private int quantity;
     private boolean rented = false;
     private String clientId;
+    private double price;
 }
 

@@ -8,6 +8,7 @@ function RegistrarAluguel() {
   const [clienteId, setClienteId] = useState("");
   const [utensilioId, setUtensilioId] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("")
   const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
 
@@ -36,12 +37,14 @@ const handleSubmit = async (e) => {
     await axios.post("http://localhost:8080/rentals", {
       clientId: clienteId,
       utensilId: utensilioId,
-      quantity: Number(quantity)
+      quantity: Number(quantity),
+      price: Number(price)
     });
     setMensagem("Aluguel registrado com sucesso!");
     setClienteId("");
     setUtensilioId("");
     setQuantity("");
+    setPrice("");
     await fetchUtensilios(); // Atualiza a lista de utensílios
   } catch (err) {
     setMensagem("Erro ao registrar aluguel: " + err.message);
@@ -103,7 +106,22 @@ const handleSubmit = async (e) => {
               required
             />
           </div>
-          
+
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <label htmlFor="price">Preço</label>
+            <span style={{ marginRight: "8px", marginLeft: "8px" }}>R$</span>
+            <input
+              id="price"
+              type="number"
+              min="0"
+              step="0.01"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
+              placeholder="Preço do aluguel"
+              required
+            />
+          </div>
+
           <button type="submit" className="submit-btn">
             ✅ Registrar Aluguel
           </button>

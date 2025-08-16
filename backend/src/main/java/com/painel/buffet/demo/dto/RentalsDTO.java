@@ -18,4 +18,6 @@ public class RentalsDTO {
     private boolean rented = false;
     private String rentedBy = "";
     private String description;
+    @NotBlank(message = "O preço não pode estar em branco")
+    private double price;
 }
