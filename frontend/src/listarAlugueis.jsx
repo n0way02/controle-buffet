@@ -7,7 +7,6 @@ function ListarAlugueis() {
   const [clientes, setClientes] = useState([]);
   const [sortField, setSortField] = useState("name");
   const [sortAsc, setSortAsc] = useState(true);
-  const [price, setPrice] = useState("");
   const [utensils, setUtensils] = useState([]);
   const navigate = useNavigate();
 
@@ -43,22 +42,55 @@ function ListarAlugueis() {
     }
   };
 
-const sortedRentals = [...alugueis].sort((a, b) => {
-  let valA = a[sortField] !== undefined ? a[sortField] : "";
-  let valB = b[sortField] !== undefined ? b[sortField] : "";
-  if (sortField === "clientId") {
-    valA = getClienteNome(a.clientId);
-    valB = getClienteNome(b.clientId);
-  } else if (sortField === "utensilId") {
-    valA = getUtensilName(a.utensilId);
-    valB = getUtensilName(b.utensilId);
+  // function parseDateBR(dateStr) {
+  //   if (!dateStr) return "";
+  //   if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  //   if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) {
+  //     const [dd, mm, yyyy] = dateStr.split("-");
+  //     return `${yyyy}-${mm}-${dd}`;
+  //   }
+  //   return dateStr;
+  // }
+
+  function formatDateDisplay(dateStr) {
+    if (!dateStr) return "";
+    // Se estiver no formato DD-MM-YYYY, retorna como está
+    if (/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) return dateStr;
+    // Se estiver no formato YYYY-MM-DD, converte para DD-MM-YYYY
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      const [yyyy, mm, dd] = dateStr.split("-");
+      return `${dd}/${mm}/${yyyy}`;
+    }
+    return dateStr;
   }
-  if (typeof valA === "string") valA = valA.toLowerCase();
-  if (typeof valB === "string") valB = valB.toLowerCase();
-  if (valA < valB) return sortAsc ? -1 : 1;
-  if (valA > valB) return sortAsc ? 1 : -1;
-  return 0;
-});
+
+  const sortedRentals = [...alugueis].sort((a, b) => {
+    let valA = a[sortField] !== undefined ? a[sortField] : "";
+    let valB = b[sortField] !== undefined ? b[sortField] : "";
+
+    if (sortField === "clientId") {
+      valA = getClienteNome(a.clientId);
+      valB = getClienteNome(b.clientId);
+    } else if (sortField === "utensilId") {
+      valA = getUtensilName(a.utensilId);
+      valB = getUtensilName(b.utensilId);
+    } else if (sortField === "rentalDate" || sortField === "returnDate") {
+      valA = new Date(a[sortField]);
+      valB = new Date(b[sortField]);
+    }
+
+    if (sortField === "rentalDate" || sortField === "returnDate") {
+      if (valA < valB) return sortAsc ? -1 : 1;
+      if (valA > valB) return sortAsc ? 1 : -1;
+      return 0;
+    }
+
+    if (typeof valA === "string") valA = valA.toLowerCase();
+    if (typeof valB === "string") valB = valB.toLowerCase();
+    if (valA < valB) return sortAsc ? -1 : 1;
+    if (valA > valB) return sortAsc ? 1 : -1;
+    return 0;
+  });
 
 
   return (
@@ -69,13 +101,13 @@ const sortedRentals = [...alugueis].sort((a, b) => {
           ← Voltar
         </button>
       </div>
-      
+
       <div className="list-container">
         {alugueis.length === 0 ? (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '3rem', 
-            color: 'var(--muted-color)' 
+          <div style={{
+            textAlign: 'center',
+            padding: '3rem',
+            color: 'var(--muted-color)'
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📋</div>
             <h3>Nenhum aluguel registrado</h3>
@@ -83,16 +115,16 @@ const sortedRentals = [...alugueis].sort((a, b) => {
           </div>
         ) : (
           <>
-            <div style={{ 
-              marginBottom: '1.5rem', 
-              padding: '1rem', 
-              background: 'var(--secondary-bg)', 
+            <div style={{
+              marginBottom: '1.5rem',
+              padding: '1rem',
+              background: 'var(--secondary-bg)',
               borderRadius: 'var(--border-radius-md)',
               border: '1px solid var(--border-color)'
             }}>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
                 gap: '1rem',
                 textAlign: 'center'
               }}>
@@ -122,7 +154,7 @@ const sortedRentals = [...alugueis].sort((a, b) => {
                 </div>
               </div>
             </div>
-            
+
             <table>
               <thead>
                 <tr>
@@ -130,13 +162,15 @@ const sortedRentals = [...alugueis].sort((a, b) => {
                   <th onClick={() => handleSort("utensilId")}>Item</th>
                   <th onClick={() => handleSort("quantity")}>Quantidade</th>
                   <th onClick={() => handleSort("price")}>Preço</th>
+                  <th onClick={() => handleSort("rentalDate")}>Data do Aluguel</th>
+                  <th onClick={() => handleSort("returnDate")}>Data de Devolução</th>
                 </tr>
               </thead>
               <tbody>
                 {sortedRentals.map(aluguel => {
                   const cliente = getClienteNome(aluguel.clientId);
                   const item = getUtensilName(aluguel.utensilId);
-                  
+
                   return (
                     <tr key={aluguel.id}>
                       <td>
@@ -172,7 +206,29 @@ const sortedRentals = [...alugueis].sort((a, b) => {
                         }}>
                           R$ {Number(aluguel.price).toFixed(2)}
                         </span>
-                        </td>
+                      </td>
+                      <td>
+                        <span style={{
+                          background: 'var(--secondary-bg)',
+                          padding: '0.25rem 0.75rem',
+                          borderRadius: '12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600'
+                        }}>
+                          {formatDateDisplay(aluguel.rentalDate)}
+                        </span>
+                      </td>
+                      <td>
+                        <span style={{
+                          background: 'var(--secondary-bg)',
+                          padding: '0.25rem 0.75rem',
+                          borderRadius: '12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600'
+                        }}>
+                          {formatDateDisplay(aluguel.returnDate)}
+                        </span>
+                      </td>
                     </tr>
                   );
                 })}
