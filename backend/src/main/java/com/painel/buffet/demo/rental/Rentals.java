@@ -11,5 +11,7 @@ public class Rentals {
     private boolean rented = false;
     private String clientId;
     private double price;
+    private String rentalDate;
+    private String returnDate;
 }
 

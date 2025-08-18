@@ -10,46 +10,58 @@ function RegistrarAluguel() {
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("")
   const [mensagem, setMensagem] = useState("");
+  const [rentalDate, setRentalDate] = useState(() => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`; // formato aceito pelo input type="date"
+  });
+  const [returnDate, setReturnDate] = useState("");
   const navigate = useNavigate();
 
-const fetchUtensilios = async () => {
-  const res = await axios.get("http://localhost:8080/utensils");
-  setUtensilios(res.data);
-};
+  const fetchUtensilios = async () => {
+    const res = await axios.get("http://localhost:8080/utensils");
+    setUtensilios(res.data);
+  };
 
-useEffect(() => {
-  axios.get("http://localhost:8080/client").then(res => setClientes(res.data));
-  fetchUtensilios();
-}, []);
+  useEffect(() => {
+    axios.get("http://localhost:8080/client").then(res => setClientes(res.data));
+    fetchUtensilios();
+  }, []);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  const utensilioSelecionado = utensilios.find(u => u.id === utensilioId);
-  if (!utensilioSelecionado) {
-    setMensagem("Selecione um item válido.");
-    return;
-  }
-  if (Number(quantity) > utensilioSelecionado.availableQuantity) {
-    setMensagem("Quantidade solicitada maior que a disponível!");
-    return;
-  }
-  try {
-    await axios.post("http://localhost:8080/rentals", {
-      clientId: clienteId,
-      utensilId: utensilioId,
-      quantity: Number(quantity),
-      price: Number(price)
-    });
-    setMensagem("Aluguel registrado com sucesso!");
-    setClienteId("");
-    setUtensilioId("");
-    setQuantity("");
-    setPrice("");
-    await fetchUtensilios(); // Atualiza a lista de utensílios
-  } catch (err) {
-    setMensagem("Erro ao registrar aluguel: " + err.message);
-  }
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const utensilioSelecionado = utensilios.find(u => u.id === utensilioId);
+    if (!utensilioSelecionado) {
+      setMensagem("Selecione um item válido.");
+      return;
+    }
+    if (Number(quantity) > utensilioSelecionado.availableQuantity) {
+      setMensagem("Quantidade solicitada maior que a disponível!");
+      return;
+    }
+    try {
+      await axios.post("http://localhost:8080/rentals", {
+        clientId: clienteId,
+        utensilId: utensilioId,
+        quantity: Number(quantity),
+        price: Number(price),
+        rentalDate: rentalDate,
+        returnDate: returnDate
+      });
+      setMensagem("Aluguel registrado com sucesso!");
+      setClienteId("");
+      setUtensilioId("");
+      setQuantity("");
+      setPrice("");
+      setRentalDate("");
+      setReturnDate("");
+      await fetchUtensilios(); // Atualiza a lista de utensílios
+    } catch (err) {
+      setMensagem("Erro ao registrar aluguel: " + err.message);
+    }
+  };
 
   return (
     <div className="page-container">
@@ -59,15 +71,15 @@ const handleSubmit = async (e) => {
           ← Voltar
         </button>
       </div>
-      
+
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="cliente">Cliente</label>
-            <select 
+            <select
               id="cliente"
-              value={clienteId} 
-              onChange={e => setClienteId(e.target.value)} 
+              value={clienteId}
+              onChange={e => setClienteId(e.target.value)}
               required
             >
               <option value="">Selecione o cliente</option>
@@ -76,13 +88,13 @@ const handleSubmit = async (e) => {
               ))}
             </select>
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="item">Item</label>
-            <select 
+            <select
               id="item"
-              value={utensilioId} 
-              onChange={e => setUtensilioId(e.target.value)} 
+              value={utensilioId}
+              onChange={e => setUtensilioId(e.target.value)}
               required
             >
               <option value="">Selecione o item</option>
@@ -93,7 +105,7 @@ const handleSubmit = async (e) => {
               ))}
             </select>
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="quantity">Quantidade</label>
             <input
@@ -103,6 +115,28 @@ const handleSubmit = async (e) => {
               value={quantity}
               onChange={e => setQuantity(e.target.value)}
               placeholder="Quantidade a alugar"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="rentalDate">Data do aluguel</label>
+            <input
+              id="rentalDate"
+              type="date"
+              value={rentalDate}
+              onChange={e => setRentalDate(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="returnDate">Data de devolução</label>
+            <input
+              id="returnDate"
+              type="date"
+              value={returnDate}
+              onChange={e => setReturnDate(e.target.value)}
               required
             />
           </div>
@@ -125,7 +159,7 @@ const handleSubmit = async (e) => {
           <button type="submit" className="submit-btn">
             ✅ Registrar Aluguel
           </button>
-          
+
           {mensagem && (
             <div className={mensagem.includes('sucesso') ? 'success-message' : 'error-message'}>
               {mensagem}

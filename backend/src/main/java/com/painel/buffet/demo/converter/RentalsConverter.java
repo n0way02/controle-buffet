@@ -18,6 +18,8 @@ public class RentalsConverter {
         rentals.setUtensilId(dto.getUtensilId());
         rentals.setQuantity(dto.getQuantity());
         rentals.setPrice(dto.getPrice());
+        rentals.setRentalDate(dto.getRentalDate());
+        rentals.setReturnDate(dto.getReturnDate()); 
         return rentals;
     }
 
@@ -28,6 +30,8 @@ public class RentalsConverter {
         dto.setUtensilId(rentals.getUtensilId());
         dto.setQuantity(rentals.getQuantity());
         dto.setPrice(rentals.getPrice());
+        dto.setRentalDate(rentals.getRentalDate());
+        dto.setReturnDate(rentals.getReturnDate());
         return dto;
     }
 

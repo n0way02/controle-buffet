@@ -20,4 +20,8 @@ public class RentalsDTO {
     private String description;
     @NotBlank(message = "O preço não pode estar em branco")
     private double price;
+    @NotBlank(message = "A data de aluguel não pode estar em branco")
+    private String rentalDate;
+    @NotBlank(message = "A data de devolução não pode estar em branco")
+    private String returnDate;
 }
